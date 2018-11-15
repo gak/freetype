@@ -6,15 +6,15 @@
 // The freetype package provides a convenient API to draw text onto an image.
 // Use the freetype/raster and freetype/truetype packages for lower level
 // control over rasterization and TrueType parsing.
-package freetype // import "github.com/golang/freetype"
+package freetype // import "github.com/gak/freetype"
 
 import (
 	"errors"
 	"image"
 	"image/draw"
 
-	"github.com/golang/freetype/raster"
-	"github.com/golang/freetype/truetype"
+	"github.com/gak/freetype/raster"
+	"github.com/gak/freetype/truetype"
 	"golang.org/x/image/font"
 	"golang.org/x/image/math/fixed"
 )
@@ -195,7 +195,7 @@ func (c *Context) rasterize(glyph truetype.Index, fx, fy fixed.Int26_6) (
 // render the given glyph at the given sub-pixel point. It is a cache for the
 // rasterize method. Unlike rasterize, p's co-ordinates do not have to be in
 // the range [0, 1).
-func (c *Context) glyph(glyph truetype.Index, p fixed.Point26_6) (
+func (c *Context) Glyph(glyph truetype.Index, p fixed.Point26_6) (
 	fixed.Int26_6, *image.Alpha, image.Point, error) {
 
 	// Split p.X and p.Y into their integer and fractional parts.
@@ -241,7 +241,7 @@ func (c *Context) DrawString(s string, p fixed.Point26_6) (fixed.Point26_6, erro
 			}
 			p.X += kern
 		}
-		advanceWidth, mask, offset, err := c.glyph(index, p)
+		advanceWidth, mask, offset, err := c.Glyph(index, p)
 		if err != nil {
 			return fixed.Point26_6{}, err
 		}
